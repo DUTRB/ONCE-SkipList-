@@ -1,7 +1,15 @@
+<!--
+ * @Author: rubo
+ * @Date: 2024-05-01 20:29:50
+ * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
+ * @LastEditTime: 2024-05-01 20:46:24
+ * @FilePath: /MySkipList/README.md
+ * @Description: 
+-->
 # 基于C++11的轻量级KV存储引擎
 
-这个项目是基于去年我转行学C++的第一个项目，参考自程序员Carl的https://github.com/youngyangyang04/Skiplist-CPP
-当时是基本仿照原项目，现在在某中厂工作半年了，用C++11重构了这个项目，加入一些C++11的新特性，比如：
+参考自程序员Carl的https://github.com/youngyangyang04/Skiplist-CPP
+用C++11重构了这个项目，加入一些C++11的新特性，比如：
 
 * 列表初始化
 * 别名模板
