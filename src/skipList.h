@@ -2,7 +2,7 @@
  * @Author: rubo
  * @Date: 2024-05-01 10:37:36
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-01 20:21:43
+ * @LastEditTime: 2024-05-01 21:31:52
  * @FilePath: /MySkipList/src/skipList.h
  * @Description: 基于C++11实现的KV存储引擎核心代码
  */
@@ -91,8 +91,87 @@ namespace skiplist
     SkipList<K, V>::SkipList(int max_level)
         :max_level(max_level), current_level(0), element_count(0)
     {
-        header = std::make_shared<node::Node<K, V>>(k(), V(), max_value);
+        header = std::make_shared<node::Node<K, V>>(k, v, max_value);
     }
+
+    template<typename K, typename V>
+    SkipList<K, V>::~SkipList(){
+        if(file_writer.is_open()){
+            file_writer.close();
+        }
+        if(file_reader.is_open()){
+            file_reader.close();
+        }
+    }
+
+    // 获得节点随机层数
+    template<typename K, typename V>
+    int SkipList<K, V>::get_random_level() const{
+        int level = 1;
+        while(rand() % 2){
+            level++:
+        }
+        level = (level < max_level) ? level : max_level;
+        return level;
+    }
+
+    // 创建节点
+    template<typename K, typename V>
+    std::shared_ptr<node::Node<K,V>> SkipList<K, V>::create_node(const K k, const V v, int levle){
+        auto node = std::make_shared<node::Node<K, V>>(k, v, level);
+        return node;     
+    }
+
+    template<typename K, typename V>
+    /**
+     * @description: 插入节点
+     * @return {*} 0：插入成功 1：节点已存在
+     */
+    int SkipList<K, V>::insert_element(const K key, const V value){
+        std::unique_lock<std::mutex> lck(mutex);
+        auto current = header;
+
+        auto update = node::Node<K, V>(max_level + 1);
+
+        for(int i = current_level; i >= 0; i++){
+            while(current->forward[i] && current->forward[i]->get_key() < key){
+                current = current->forward[i];
+            }
+            //存储节点指针
+            update[i] = current;
+        }
+
+        //到达第0层，寻找插入位置
+        current = current->forward[0];
+        // 若节点已存在
+        if(current && current->get_key() == key){
+            std::cout << "key: " << key <<", exist" << std::endl;
+            lck.unlock();
+            return 1;
+        }
+        //若节点不存在 在current和update[0] 之间插入
+        if(current == nullptr || current->get_key() != key){
+            int random_level = get_random_level();
+
+            if(random_level > max_level){
+                for(int i = current_level; i < random_level + 1; i++){
+                    update[i] = header;
+                }
+                current_level = random_level();
+            }
+            // 插入节点 调整链表指针
+            auto insert_node = create_node(key, value, ramdom_level);
+            for(int i = 0; i < random_level; i++){
+                insert_node->forward[i] = update[i]->forward[i];
+                update[i]->forward[i] = insert_node;
+            }
+            std::cout << "Successfully inserted key: " << key << ", value" << value <<std::endl;
+            element_count++;
+        }
+        lck.unlock();
+        return 0;
+    }
+    
 
 
 
