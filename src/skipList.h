@@ -2,7 +2,7 @@
  * @Author: rubo
  * @Date: 2024-05-01 10:37:36
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-02 11:49:53
+ * @LastEditTime: 2024-05-02 13:40:50
  * @FilePath: /MySkipList/src/skipList.h
  * @Description: 基于C++11实现的KV存储引擎核心代码
  */
@@ -91,7 +91,7 @@ namespace skiplist
     SkipList<K, V>::SkipList(int max_level)
         :max_level(max_level), current_level(0), element_count(0)
     {
-        header = std::make_shared<node::Node<K, V>>(k, v, max_value);
+        header = std::make_shared<node::Node<K, V>>(K(), V(), max_level);
     }
 
     template<typename K, typename V>
@@ -109,7 +109,7 @@ namespace skiplist
     int SkipList<K, V>::get_random_level() const{
         int level = 1;
         while(rand() % 2){
-            level++:
+            level++;
         }
         level = (level < max_level) ? level : max_level;
         return level;
@@ -117,7 +117,7 @@ namespace skiplist
 
     // 创建节点
     template<typename K, typename V>
-    std::shared_ptr<node::Node<K,V>> SkipList<K, V>::create_node(const K k, const V v, int levle){
+    std::shared_ptr<node::Node<K,V>> SkipList<K, V>::create_node(const K k, const V v, int level){
         auto node = std::make_shared<node::Node<K, V>>(k, v, level);
         return node;     
     }
@@ -133,8 +133,8 @@ namespace skiplist
 
         auto update = node::NodeVec<K, V>(max_level + 1);
 
-        for(int i = current_level; i >= 0; i++){
-            while(current->forward[i] && current->forward[i]->get_key() < key){
+        for(int i = current_level; i >= 0; i--){
+            while(current->forward[i] != nullptr && current->forward[i]->get_key() < key){
                 current = current->forward[i];
             }
             //存储节点指针
@@ -153,19 +153,19 @@ namespace skiplist
         if(current == nullptr || current->get_key() != key){
             int random_level = get_random_level();
 
-            if(random_level > max_level){
-                for(int i = current_level; i < random_level + 1; i++){
+            if(random_level > current_level){
+                for(int i = current_level + 1; i < random_level + 1; i++){
                     update[i] = header;
                 }
-                current_level = random_level();
+                current_level = random_level;
             }
             // 插入节点 调整链表指针
-            auto insert_node = create_node(key, value, ramdom_level);
+            auto insert_node = create_node(key, value, random_level);
             for(int i = 0; i < random_level; i++){
                 insert_node->forward[i] = update[i]->forward[i];
                 update[i]->forward[i] = insert_node;
             }
-            std::cout << "Successfully inserted key: " << key << ", value" << value <<std::endl;
+            std::cout << "Successfully inserted key: " << key << ", value: " << value <<std::endl;
             element_count++;
         }
         lck.unlock();
@@ -257,7 +257,7 @@ namespace skiplist
         if(current && current->get_key() == key){
             for(int i = 0; i <= current_level; i++){
                 if(update[i]->forward[i] != current){
-                    braek;
+                    break;
                 }
                 update[i]->forward[i] = current->forward[i];
             }

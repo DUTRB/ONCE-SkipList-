@@ -158,7 +158,7 @@ int SkipList<K, V>::InsertElement(const K key, const V value) {
         inserted_node->forward_[i] = update[i]->forward_[i];
         update[i]->forward_[i] = inserted_node;
     }
-    std::cout << "Successfully inserted key:" << key << ", value:" << value << std::endl;
+    std::cout << "Successfully inserted key: " << key << ", value: " << value << std::endl;
     element_count_++;
   }
   lck.unlock();
