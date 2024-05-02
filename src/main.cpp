@@ -2,42 +2,43 @@
  * @Author: rubo
  * @Date: 2024-05-02 11:51:32
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-02 13:49:57
+ * @LastEditTime: 2024-05-02 13:58:16
  * @FilePath: /MySkipList/src/main.cpp
- * @Description: 
+ * @Description: 此文件为 skipList.h 测试文件，主要测试实现跳表相关功能
  */
 #include <iostream>
 #include "skipList.h"
 #define FILE_PATH "../config/dumpFile"
 
-int main() {
-  skiplist::SkipList<int, std::string> skip_list(6);
-  // key use int, if use other type, need define compare func
-  // if want to modify type of key, modify LoadFile func as well
-  skip_list.insert_element(1, "one"); 
-  skip_list.insert_element(3, "three"); 
-  skip_list.insert_element(7, "seven"); 
-  skip_list.insert_element(8, "eight"); 
-  skip_list.insert_element(9, "nine"); 
-  skip_list.insert_element(19, "ten"); 
-  skip_list.insert_element(19, "ninteen"); 
+int main()
+{
+    skiplist::SkipList<int, std::string> skip_list(6);
 
-  std::cout << "skip_list size:" << skip_list.size() << std::endl;
+    // 目前只支持 int类型 key, 若为其他类型，需添加自定义比较函数
+    skip_list.insert_element(1, "one");
+    skip_list.insert_element(3, "three");
+    skip_list.insert_element(7, "seven");
+    skip_list.insert_element(8, "eight");
+    skip_list.insert_element(9, "nine");
+    skip_list.insert_element(19, "ten");
+    skip_list.insert_element(19, "ninteen");
 
-  skip_list.dumpFile();
+    std::cout << "skiplist size:" << skip_list.size() << std::endl;
+    // 保存文件
+    skip_list.dumpFile();
 
-  //skip_list.loadFile();
+    // skip_list.loadFile();
 
-  skip_list.search_element(9);
-  skip_list.search_element(18);
+    // 查找节点
+    skip_list.search_element(9);
+    skip_list.search_element(18);
+    // 打印全部节点
+    skip_list.print_list();
+    // 删除节点
+    skip_list.delete_element(3);
+    skip_list.delete_element(7);
 
-  skip_list.print_list();
+    std::cout << "skip_list size:" << skip_list.size() << std::endl;
 
-  skip_list.delete_element(3);
-  skip_list.delete_element(7);
-
-  std::cout << "skip_list size:" << skip_list.size() << std::endl;
-
-  skip_list.print_list();
-  
+    skip_list.print_list();
 }

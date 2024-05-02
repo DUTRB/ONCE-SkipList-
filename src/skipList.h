@@ -2,7 +2,7 @@
  * @Author: rubo
  * @Date: 2024-05-01 10:37:36
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-02 13:40:50
+ * @LastEditTime: 2024-05-02 14:03:32
  * @FilePath: /MySkipList/src/skipList.h
  * @Description: 基于C++11实现的KV存储引擎核心代码
  */
@@ -61,6 +61,7 @@ namespace skiplist
         SkipList(int);
         ~SkipList();
 
+        // 实现跳表操作的基本功能函数
         int get_random_level() const;
         std::shared_ptr<node::Node<K, V>> create_node(K, V, int);
         int insert_element(K, V);
@@ -72,17 +73,18 @@ namespace skiplist
         int size() const { return element_count; }
         
     private:
+        // 文件转存相关函数
         void get_key_value_from_string(const std::string &str, std::string &key, std::string &value) const;
         bool isValid_string(const std::string &str) const;
 
     private:
-        int max_level;
-        int current_level;
+        int max_level;              // 最大层级
+        int current_level;          // 当前层级
         std::shared_ptr<node::Node<K, V>> header;
         std::ofstream file_writer;
         std::ifstream file_reader;
-        int element_count;          //节点个数
-        std::mutex mutex;
+        int element_count;          // 节点个数
+        std::mutex mutex;           // 互斥锁
 
     };
 
@@ -93,7 +95,7 @@ namespace skiplist
     {
         header = std::make_shared<node::Node<K, V>>(K(), V(), max_level);
     }
-
+    // 析构函数 释放文件操作
     template<typename K, typename V>
     SkipList<K, V>::~SkipList(){
         if(file_writer.is_open()){
@@ -190,6 +192,7 @@ namespace skiplist
         }
     }
 
+    // 文件转存
     template<typename K, typename V>
     void SkipList<K, V>::dumpFile(){
         std::cout << "dump_file******************" << std::endl;
@@ -240,7 +243,12 @@ namespace skiplist
         return true;
     }
 
+
     template<typename K, typename V>
+    /**
+     * @description: 删除节点
+     * @return {*}
+     */
     void SkipList<K, V>::delete_element(K key){
         std::unique_lock<std::mutex> lck(mutex);
         auto current = header;
@@ -273,6 +281,10 @@ namespace skiplist
     }
 
     template<typename K, typename V>
+    /**
+     * @description: 根据 key 查找节点
+     * @return {*}
+     */
     bool SkipList<K, V>::search_element(K key) const{
         std::cout << "search_element **************" << std::endl;
         auto current = header;
