@@ -2,7 +2,7 @@
  * @Author: rubo
  * @Date: 2024-05-01 20:29:50
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-01 20:46:24
+ * @LastEditTime: 2024-05-02 14:33:05
  * @FilePath: /MySkipList/README.md
  * @Description: 
 -->
@@ -52,21 +52,20 @@
 编译运行：
 
 ```
-./build.sh            // 编译
-./run.sh      // 运行main函数
-./run.sh -t   // 性能测试
+make                    // 编译
+./bin/main              // 运行main函数
+./stress_test.sh        // 性能测试
 ```
 
 # 主要接口
 
-## 主要接口
 
-* InsertElement（插入）
-* DeleteElement（删除）
-* SearchElement（查询）
-* PrintList（打印）
-* DumpFile（转储）
-* LoadFile（加载）
+* insert_element (插入)
+* delete_element (删除)
+* search_element (查找)
+* print_list (打印)
+* dumpFile (转载)
+* loadFile (导入)
 
 # 参考资料
 
