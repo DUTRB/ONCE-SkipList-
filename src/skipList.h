@@ -2,7 +2,7 @@
  * @Author: rubo
  * @Date: 2024-05-01 10:37:36
  * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
- * @LastEditTime: 2024-05-01 21:31:52
+ * @LastEditTime: 2024-05-02 11:49:53
  * @FilePath: /MySkipList/src/skipList.h
  * @Description: 基于C++11实现的KV存储引擎核心代码
  */
@@ -131,7 +131,7 @@ namespace skiplist
         std::unique_lock<std::mutex> lck(mutex);
         auto current = header;
 
-        auto update = node::Node<K, V>(max_level + 1);
+        auto update = node::NodeVec<K, V>(max_level + 1);
 
         for(int i = current_level; i >= 0; i++){
             while(current->forward[i] && current->forward[i]->get_key() < key){
@@ -172,8 +172,124 @@ namespace skiplist
         return 0;
     }
     
+    template<typename K, typename V>
+    /**
+     * @description: 打印跳表所有节点
+     * @return {*}
+     */
+    void SkipList<K, V>::print_list() const{
+        std::cout << "\n*****Skip list*******" << "\n";
+        for(int i = 0; i <= current_level; i++){
+            auto node = header->forward[i];
+            std::cout << "Level " << i << ": ";
+            while(node != nullptr){
+                std::cout << node->get_key() << ":" <<node->get_value() << ";";
+                node = node->forward[i];
+            }
+            std::cout << std::endl;
+        }
+    }
 
+    template<typename K, typename V>
+    void SkipList<K, V>::dumpFile(){
+        std::cout << "dump_file******************" << std::endl;
+        file_writer.open(STORE_FILE);
+        auto node = header->forward[0];
+        while(node != nullptr){
+            file_writer << node->get_key() << ":" << node->get_value() << "\n";
+            std:: cout << node->get_key() << ":" << node->get_value() << "\n";
+            node = node->forward[0];
+        }
+        file_writer.flush();
+        file_writer.close();
+        return ;
+    }
 
+    template<typename K, typename V>
+    void SkipList<K, V>::loadFile(){
+        file_reader.open(STORE_FILE);
+        std::cout << "load_file*****************" << std::endl;
+        std::string str;
+        std::string key;
+        std::string value;
+        while(getline(file_reader,str)){
+            get_key_value_from_string(str, key, value);
+            if(key.empty() || value.empty()){
+                continue;
+            }
+            insert_element(key, value);
+            std::cout << "key: " << key << " value: " << value << std::endl;
+        }
+        file_reader.close();
+    }
+
+    template<typename K, typename V>
+    void SkipList<K, V>::get_key_value_from_string(const std::string& str, std::string& key, std::string& value) const{
+        if(!isValid_string(str)){
+            return;
+        }
+        // 获取 key 和 value
+        key = str.substr(0, str.find(delimiter));
+        value = str.substr(str.find(delimiter) + 1, str.length());
+    }   
+
+    template<typename K, typename V>
+    bool SkipList<K, V>::isValid_string(const std::string& str) const{
+        if(str.empty()) return false;
+        if(str.find(delimiter) == std::string::npos) return false;
+        return true;
+    }
+
+    template<typename K, typename V>
+    void SkipList<K, V>::delete_element(K key){
+        std::unique_lock<std::mutex> lck(mutex);
+        auto current = header;
+        auto update = node::NodeVec<K, V>(max_level + 1);
+        for(int i = current_level; i >= 0; i--){
+            while(current->forward[i] && current->forward[i]->get_key() < key){
+                current = current->forward[i];
+            }
+            update[i] = current;
+        }
+
+        current = current->forward[0];
+        // 当删除节点存在时
+        if(current && current->get_key() == key){
+            for(int i = 0; i <= current_level; i++){
+                if(update[i]->forward[i] != current){
+                    braek;
+                }
+                update[i]->forward[i] = current->forward[i];
+            }
+            while(current_level > 0 && header->forward[current_level] == 0){
+                current_level--;
+            }
+
+            std::cout << "Successful delete key " << key << std::endl;
+            element_count--;
+        }
+        lck.unlock();
+        return ;
+    }
+
+    template<typename K, typename V>
+    bool SkipList<K, V>::search_element(K key) const{
+        std::cout << "search_element **************" << std::endl;
+        auto current = header;
+
+        for(int i = current_level; i >= 0; i--){
+            while(current->forward[i] && current->forward[i]->get_key() < key){
+                current = current->forward[i];
+            }
+        }
+        current = current->forward[0];
+        if(current && current->get_key() == key){
+            std::cout << "Found key: " << key << ", value: " << current->get_value() << std::endl;
+            return true;
+        }
+        std::cout << "Not found" << key << std::endl;
+        return false;
+    }
 
 
 } // namespace SkipList

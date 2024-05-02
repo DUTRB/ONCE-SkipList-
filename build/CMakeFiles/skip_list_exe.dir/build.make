@@ -73,15 +73,15 @@ CMakeFiles/skip_list_exe.dir/src/main.cc.o: CMakeFiles/skip_list_exe.dir/flags.m
 CMakeFiles/skip_list_exe.dir/src/main.cc.o: ../src/main.cc
 CMakeFiles/skip_list_exe.dir/src/main.cc.o: CMakeFiles/skip_list_exe.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/void/Documents/Skiplist-cpp/MySkipList/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/skip_list_exe.dir/src/main.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/skip_list_exe.dir/src/main.cc.o -MF CMakeFiles/skip_list_exe.dir/src/main.cc.o.d -o CMakeFiles/skip_list_exe.dir/src/main.cc.o -c /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/skip_list_exe.dir/src/main.cc.o -MF CMakeFiles/skip_list_exe.dir/src/main.cc.o.d -o CMakeFiles/skip_list_exe.dir/src/main.cc.o -c /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc
 
 CMakeFiles/skip_list_exe.dir/src/main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/skip_list_exe.dir/src/main.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc > CMakeFiles/skip_list_exe.dir/src/main.cc.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc > CMakeFiles/skip_list_exe.dir/src/main.cc.i
 
 CMakeFiles/skip_list_exe.dir/src/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/skip_list_exe.dir/src/main.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc -o CMakeFiles/skip_list_exe.dir/src/main.cc.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/void/Documents/Skiplist-cpp/MySkipList/src/main.cc -o CMakeFiles/skip_list_exe.dir/src/main.cc.s
 
 # Object files for target skip_list_exe
 skip_list_exe_OBJECTS = \

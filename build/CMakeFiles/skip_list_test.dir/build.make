@@ -73,15 +73,15 @@ CMakeFiles/skip_list_test.dir/test/stress_test.cc.o: CMakeFiles/skip_list_test.d
 CMakeFiles/skip_list_test.dir/test/stress_test.cc.o: ../test/stress_test.cc
 CMakeFiles/skip_list_test.dir/test/stress_test.cc.o: CMakeFiles/skip_list_test.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/void/Documents/Skiplist-cpp/MySkipList/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/skip_list_test.dir/test/stress_test.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/skip_list_test.dir/test/stress_test.cc.o -MF CMakeFiles/skip_list_test.dir/test/stress_test.cc.o.d -o CMakeFiles/skip_list_test.dir/test/stress_test.cc.o -c /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/skip_list_test.dir/test/stress_test.cc.o -MF CMakeFiles/skip_list_test.dir/test/stress_test.cc.o.d -o CMakeFiles/skip_list_test.dir/test/stress_test.cc.o -c /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc
 
 CMakeFiles/skip_list_test.dir/test/stress_test.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/skip_list_test.dir/test/stress_test.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc > CMakeFiles/skip_list_test.dir/test/stress_test.cc.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc > CMakeFiles/skip_list_test.dir/test/stress_test.cc.i
 
 CMakeFiles/skip_list_test.dir/test/stress_test.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/skip_list_test.dir/test/stress_test.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc -o CMakeFiles/skip_list_test.dir/test/stress_test.cc.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/void/Documents/Skiplist-cpp/MySkipList/test/stress_test.cc -o CMakeFiles/skip_list_test.dir/test/stress_test.cc.s
 
 # Object files for target skip_list_test
 skip_list_test_OBJECTS = \
